@@ -71,7 +71,7 @@ for day, day_df in grouped:
     ce_exit_price = ce_exit.iloc[0]["close"]
     pe_exit_price = pe_exit.iloc[0]["close"]
 
-    lot_size = 65
+    lot_size = 1
 
     pnl = (
         (ce_exit_price - ce_entry_price) +
@@ -80,10 +80,14 @@ for day, day_df in grouped:
 
     trades.append({
         "date": day,
+        "entry_time": entry_row["date"],
+        "entry_spot_price": spot_price,
         "atm": atm,
         "expiry": expiry,
         "entry_ce": ce_entry_price,
         "entry_pe": pe_entry_price,
+        "exit_time": exit_row["date"],
+        "exit_spot_price": exit_row["spot"],
         "exit_ce": ce_exit_price,
         "exit_pe": pe_exit_price,
         "pnl": pnl
@@ -93,9 +97,18 @@ for day, day_df in grouped:
 
     logger.info(
     f"TRADE | Date: {day} | ATM: {atm} | "
-    f"CE: {ce_entry_price}->{ce_exit_price} | "
-    f"PE: {pe_entry_price}->{pe_exit_price} | "
+    f"Entry Time: {entry_row['date']} | Entry Spot: {spot_price} | "
+    f"Entry CE: {ce_entry_price} | Entry PE: {pe_entry_price} | "
+    f"Exit CE: {ce_exit_price} | Exit PE: {pe_exit_price} | "
+    f"Exit time: {exit_row['date']} | Exit Spot: {exit_row['spot']} "
     f"PnL: {pnl}"
-)
+    )
+
+if trades:
+    trades_df = pd.DataFrame(trades)
+    trades_df.to_csv("trades.csv", index=False)
+    logger.info(f"Successfully saved {len(trades)} trades to trades.csv")
+else:
+    logger.warning("No trades were generated, nothing to save.")
 
 # print(trades)
