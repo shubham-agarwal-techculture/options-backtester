@@ -19,12 +19,12 @@ try:
         volume,
         oi
     FROM nfo_nifty_options   
-    WHERE date BETWEEN '2023-03-29T09:15:00.000000Z' and '2023-06-30T15:25:00.000000Z'
+    WHERE date BETWEEN '2025-01-01T09:15:00.000000Z' and '2026-01-31T15:25:00.000000Z'
     """
 
     query_future = """
     SELECT date, close FROM nfo_nifty_futures 
-    WHERE date BETWEEN '2023-03-29T09:15:00.000000Z' and '2023-06-30T15:25:00.000000Z'
+    WHERE date BETWEEN '2025-01-01T09:15:00.000000Z' and '2026-01-31T15:25:00.000000Z'
     """
 
     options_df = pd.read_sql(query_options, engine)

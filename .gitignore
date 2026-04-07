@@ -9,3 +9,10 @@ __pycache__
 *.pyc
 *.pyo
 *.pyd   
+
+backtest_loop copy.py
+backtest_results-*.csv  
+
+implementation_plan*.md
+task*.md
+walkthrough*.md
